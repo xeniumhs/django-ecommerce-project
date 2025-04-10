@@ -1,0 +1,44 @@
+{% extends "base/base.html" %}
+
+{% block body %}
+
+<h1>Cart</h1>
+
+<table style="width: 100%; border-collapse: collapse; margin: 50px;">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Price (per item)</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in cart_items %}
+            <tr>
+                <td>{{ item.product.product_name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>${{ item.product.price }}</td>
+                
+                <td>
+                    <a href="{% url 'product:increase_quantity' item.id %}" class="btn btn-success">Increase</a>
+                    <a href="{% url 'product:decrease_quantity' item.id %}" class="btn btn-warning">Decrease</a>
+                    <a href="{% url 'product:remove_from_cart' item.id %}" class="btn btn-danger">Remove</a>
+                </td>
+            </tr>
+        {% empty %}
+            <tr>
+                <td colspan="5" style="text-align: center;">Your cart is empty.</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="d-flex flex-column align-items-end" style="margin-top: 20px;">
+    <p style="text-align: right; margin-right: 100px; margin-top: 20px; font-weight: bold;">Total Price: ${{ total_price }}</p>
+    <div><a href="{% url 'product:shop' %}" class="btn btn-primary" role="button" style="margin-top: 10px;">Continue Shopping</a>
+        <a href="{% url 'product:checkout' %}" class="btn btn-success" role="button" style="margin-right: 100px; margin-top: 10px;">Proceed to Checkout</a>
+    </div>
+</div>
+
+{% endblock %}

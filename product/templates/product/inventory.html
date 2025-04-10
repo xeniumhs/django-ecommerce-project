@@ -1,0 +1,39 @@
+{% extends "product/product_list.html" %}
+
+{% block card_buttons %}
+<a href="{% url 'product:edit' product.product_ID %}" class="btn btn-dark">Edit</a>
+    <a href="{% url 'product:product_details' product.product_ID %}" class="btn btn-secondary">Details</a>
+                        
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete{{product.product_ID}}">
+                                                            Delete
+                                                        </button>
+
+                                                        <!-- Modal-Delete Product -->
+                                                            <div class="modal" id="delete{{product.product_ID}}" tabindex="-1" aria-labelledby="myModalLabel1" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">
+                                                                Product: {{ product.product_name }}
+                                                                </h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true"></span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>Are you sure you want to delete the product?</p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <form action="{% url 'product:delete' product.product_ID %}" method="POST">
+                                                                    {% csrf_token %}
+                                                                        <input type="submit" class="btn btn-danger" value="Delete">
+                                                                </form>
+                                                                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+                                                            </div>
+                                                            </div>
+                                                        </div>
+                                                        </div>
+{% endblock %}                        
+                        
+    
+    

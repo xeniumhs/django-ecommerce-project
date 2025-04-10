@@ -1,0 +1,52 @@
+/* Image container */
+.image-container {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+}
+
+/* Zoom effect on the image */
+.zoom-img {
+    width: 100%;  /* Set the width to 100% of the container */
+    height: auto; /* Auto height based on width */
+    aspect-ratio: 1512 / 1890; /* This maintains the aspect ratio */
+    object-fit: cover;  /* Ensure the image covers the space properly */
+    transition: transform 0.2s ease; /* For smooth zoom transition */
+}
+
+/* The zoom lens */
+.zoom-lens {
+    position: absolute;
+    border: 0.01px solid #000;
+    width: 100px; /* Lens size */
+    height: 100px; /* Lens size */
+    cursor: zoom-in;
+    background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent lens */
+    display: none; /* Hidden initially */
+    border-radius: 50%; /* Make the lens circular */
+    pointer-events: none; /* Prevent lens from blocking mouse events */
+}
+
+/* Zoomed-in image effect */
+.zoom-img.zoomed {
+    transition: transform 0.5s ease;
+    transform: scale(2); /* Zoom level */
+}
+
+/* Carousel container */
+.carousel-container {
+    position: relative;
+    pointer-events: none; /* Disable interaction outside the carousel */
+}
+
+/* Enable interaction for carousel controls only */
+.carousel-control-prev, 
+.carousel-control-next {
+    pointer-events: auto; /* Make sure the control buttons are clickable */
+}
+
+/* Optional: Add a max-height for the carousel to avoid any overflow or other layout issues */
+.carousel-inner img {
+    max-height: 500px; /* Adjust the height as needed */
+    object-fit: cover; /* This ensures images maintain aspect ratio without distortion */
+}

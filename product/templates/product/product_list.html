@@ -1,0 +1,93 @@
+{% extends "base/base.html" %}
+
+{% block body %}
+
+<h3 class="m-4">All Products</h3>
+
+
+{% if page_obj %}
+<div class="container-fluid">
+    <div class="row">
+        {% for product in page_obj %}
+            <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+                <div class="card d-flex flex-column h-100" style="max-width: 25rem;">
+                        <div class="image-container">
+                            <img 
+                            src="{{ product.product_image.url|default:'/media/product_images/default.jpg' }}" 
+                            class="d-block user-select-none zoom-img" 
+                            width="100%" 
+                            height="500px" 
+                            alt="{{ product.product_name }}" 
+                            style="object-fit: cover;" 
+                            id="zoom-image"
+                        />
+
+                            <div class="zoom-lens" id="zoom-lens"></div>
+                        </div>
+                    
+                    
+
+
+                    <h3 class="card-header text-truncate">{{ product.product_name }}</h3>
+                    <div class="card-body">
+                        
+                        <p class="card-text mt-2">{{ product.product_description }}</p>
+                        <div class="d-flex justify-content-between">
+                        <h6 class="card-subtitle text-muted ">Price : <strong>${{ product.price }}</strong> </h6>
+                        <h6 class="card-subtitle text-muted text-end">In Stock: <strong>{{ product.quantity_in_stock }}</strong></h6>
+                    </div></div>
+                    <div class="card-footer mt-auto text-center d-flex justify-content-center gap-2">
+
+                        {% block card_buttons %}
+                        
+
+                        {% endblock %}
+                        
+                    </div>
+                </div>
+            </div>
+
+            {% if forloop.counter|divisibleby:4 and not forloop.last %}
+            </div><div class="row">
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Pagination Controls -->
+<div class="d-flex justify-content-center mt-4">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+            <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+            </li>
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+
+{% else %}
+<div class="alert alert-dismissible alert-danger">
+  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  <strong>No Product Records!</strong> <a href="#" class="alert-link">Change a few things up</a> and try submitting again.
+</div>
+{% endif %}
+
+{% endblock %}

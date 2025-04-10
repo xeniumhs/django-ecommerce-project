@@ -1,0 +1,35 @@
+{% extends "base/base.html" %}
+
+{% block body %}
+<h1>My Orders</h1>
+
+{% if orders %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Total Price</th>
+                <th>Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.created_at|date:"F j, Y" }}</td>
+                    <td>{{ order.status }}</td>
+                    <td>${{ order.total_price }}</td>
+                    <td>
+                        <a href="{% url 'product:order_details' order.id %}" class="btn btn-sm btn-primary">View</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>You have not placed any orders yet.</p>
+{% endif %}
+
+{% endblock %}

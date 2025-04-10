@@ -1,0 +1,24 @@
+{% extends "product/product_list.html" %}
+
+{% block card_buttons %}
+    <a href="{% url 'product:product_details' product.product_ID %}" class="btn btn-secondary">Details</a>
+
+    <form action="{% url 'product:add_to_cart' product.product_ID %}" method="POST" id="add-to-cart-form-{{ product.product_ID }}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary" id="add-to-cart-button-{{ product.product_ID }}">Add to Cart</button>
+    </form>
+{% endblock %}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.body.addEventListener("submit", function(e) {
+            if (e.target.matches("form[id^='add-to-cart-form']")) {
+                const button = e.target.querySelector("button");
+                if (button) {
+                    button.disabled = true;
+                    button.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Adding...';
+                }
+            }
+        });
+    });
+</script>

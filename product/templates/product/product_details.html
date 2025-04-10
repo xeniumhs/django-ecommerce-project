@@ -1,0 +1,51 @@
+{% extends "base/base.html" %}
+
+{% block body %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <!-- Product Details Card -->
+        <div class="col-md-10">
+            <div class="card shadow-lg">
+                <div class="row g-0">
+                    <!-- Product Image Section -->
+                    <div class="col-md-6">
+                        <img 
+                            src="{% if product.product_image %}{{ product.product_image.url }}{% else %}/media/default.jpg{% endif %}" 
+                            class="img-fluid rounded-start" 
+                            alt="{{ product.product_name }}"
+                            style="width: 100%; max-height: 600px;"
+                        />
+                    </div>
+                    <!-- Product Info Section -->
+                    <div class="col-md-6">
+                        <div class="card-body">
+                            <h2 class="card-title">{{ product.product_name }}</h2>
+                            <p class="card-text"><strong>Price:</strong> ${{ product.price }}</p>
+                            <p class="card-text"><strong>Description:</strong> {{ product.product_description }}</p>
+                            <p class="card-text"><strong>Quantity in Stock:</strong> {{ product.quantity_in_stock }}</p>
+                            {% if product.category %}
+                                <p class="card-text"><strong>Category:</strong> {{ product.category.category_name }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4 align-items-center">
+    <!-- Back Button -->
+    <div class="col-md-6 text-start">
+        <a class="btn btn-dark w-50" href="{{ request.META.HTTP_REFERER|default:'#' }}">Back</a>
+    </div>
+    
+    <!-- Add to Cart Button -->
+    <div class="col-md-6 text-end">
+        <form action="{% url 'product:add_to_cart' product.product_ID %}" method="POST" id="add-to-cart-form-{{ product.product_ID }}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary w-50" id="add-to-cart-button-{{ product.product_ID }}">Add to Cart</button>
+        </form>
+    </div>
+</div>
+
+</div>
+{% endblock %}

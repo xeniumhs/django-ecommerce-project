@@ -1,0 +1,81 @@
+{% extends "base/base.html" %}
+{% load custom_filters %}
+{% block body %}
+
+<h1 class="mt-2 ">Order Confirmation</h1>
+
+<div style="margin: 50px;  border: 1px solid #ddd; padding: 20px; border-radius: 8px;">
+    <h2 style="text-align: center;">Invoice</h2>
+    <div style="border-bottom: 1px solid #ddd; padding-bottom: 20px;">
+        <p><strong>Order ID:</strong> {{ order.id }}</p>
+        <p><strong>Date:</strong> {{ order.created_at|date:"F j, Y" }}</p>
+        <p><strong>Status:</strong> {{ order.status }}</p>
+    </div>
+
+    <div style="border-bottom: 1px solid #ddd; padding-bottom: 20px; margin-top: 20px;">
+        <h3>Billing Details:</h3>
+        <p><strong>Customer:</strong> 
+            {% if order.user.get_full_name %}
+                {{ order.user.get_full_name }}
+            {% else %}
+                {{ order.user.username }}
+            {% endif %}
+        </p>
+        <p><strong>Payment: </strong> Cash on delivery</p>
+        <p><strong>Shipping Address:</strong> 
+            {% if order.shipping_address %}
+                {{ order.shipping_address }}
+            {% else %}
+                No shipping address provided.
+            {% endif %}
+        </p>
+
+        <!-- Form for updating shipping address -->
+        <h4>Update Shipping Address</h4>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Update Address</button>
+        </form>
+
+
+    </div>
+
+    <h3 style="margin-top: 30px;">Order Items</h3>
+    <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+        <thead>
+            <tr style="border-bottom: 2px solid #ddd;">
+                <th style="padding: 10px; text-align: left;">Product Name</th>
+                <th style="padding: 10px; text-align: right;">Quantity</th>
+                <th style="padding: 10px; text-align: right;">Price (per item)</th>
+                <th style="padding: 10px; text-align: right;">Total Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order_items %}
+                <tr style="border-bottom: 1px solid #ddd;">
+                    <td style="padding: 10px;">{{ item.product.product_name }}</td>
+                    <td style="padding: 10px; text-align: right;">{{ item.quantity }}</td>
+                    <td style="padding: 10px; text-align: right;">${{ item.price_at_purchase }}</td>
+                    <td style="padding: 10px; text-align: right;">${{ item.total_price }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4" style="text-align: center; padding: 10px;">No items found in this order.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div style="margin-top: 30px; border-top: 2px solid #ddd; padding-top: 20px;">
+        <h3 style="margin-bottom: 10px;">Summary</h3>
+        <p><strong>Total Price:</strong> ${{ order.total_price }}</p>
+        <p><strong>Grand Total:</strong> ${{ order.total_price }}</p>
+    </div>
+
+    <div class="d-flex flex-column align-items-end" style="margin-top: 30px;">
+        <a href="{% url 'product:shop' %}" class="btn btn-primary" role="button" style="margin-top: 10px;">Continue Shopping</a>
+    </div>
+</div>
+
+{% endblock %}
