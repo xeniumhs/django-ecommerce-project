@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ecommerce-Site</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/product_detail.css'%}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-light" data-bs-theme="light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Ecommmerce</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarColor03">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Home
+            <span class="visually-hidden">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'product:index' %}">All Products</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'product:add' %}">Add Products</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'product:about' %}">About</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Separated link</a>
+          </div>
+        </li>
+      </ul>
+      
+    </div>
+  </div>
+ 
+</nav> 
+<nav class="navbar navbar-expand-lg bg-light" data-bs-theme="light" style="height: 50px; display: flex; justify-content: center; align-items: center;">
+    <form class="d-flex align-items-center" method="get" action="{% url 'product:product_list' %}" style="margin: 0;">
+        <input 
+            class="form-control me-sm-2" 
+            type="search" 
+            name="q" 
+            placeholder="Search products..." 
+            value="{{ request.GET.q|default_if_none:'' }}" 
+            style="height: 35px; width: 300px;"
+        >
+        <button 
+            class="btn btn-dark" 
+            type="submit" 
+            style="height: 35px; padding: 0 15px; border-radius: 2px;"
+        >
+            Search
+        </button>
+    </form>
+</nav>
+
+
+
+
+{% block body %}
+
+{% endblock %}
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+<footer class="text-center py-4 mt-5">
+  <p>Designed and Made by Xenium HS</p>
+  <p>© 2025 PROWEAR Jerseys. All rights reserved.</p>
+  <p>
+    <a href="/privacy-policy">Privacy Policy</a> |
+    <a href="https://facebook.com/yourcompany" target="_blank">Facebook</a> |
+    <a href="https://twitter.com/yourcompany" target="_blank">Twitter</a>
+  </p>
+</footer>
+</html>
