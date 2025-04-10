@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.sqlite3
+*.log
+
+# Virtual environment
+virtual/
+
+
+# VS Code
+.vscode/
+
+# Django
+*.pyc
+db.sqlite3
+media/
+staticfiles/
+.env
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Migrations (optional – include if you want to ignore them)
+# ** Comment this out if you DO want to version control migrations
+# */migrations/
+# !*/migrations/__init__.py
