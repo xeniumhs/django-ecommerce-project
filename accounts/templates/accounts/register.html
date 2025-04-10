@@ -1,0 +1,21 @@
+{% extends 'base/base.html' %}
+
+{% block body %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Sign Up</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+                </div>
+            </form>
+            <p class="mt-3 text-center">
+                Already have an account? <a href="{% url 'accounts:login' %}">Login here</a>.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
